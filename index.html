@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div id="container">
+    <div id="display">
+    </div>
+    <div id="buttons">
+        <button onclick="clears(display)" class="clear">C</button>
+        <button onclick="addOperator('-')" class="other mark">+/-</button>
+        <button onclick="addOperator('%')" class="other percent">%</button>
+        <button onclick="addOperator('/')" class="other delenie">/</button>
+        <button onclick="addNum(7)" class=" num">7</button>
+        <button onclick="addNum(8)" class=" num">8</button>
+        <button onclick="addNum(9)" class=" num">9</button>
+        <button onclick="addOperator('*')" class="other times">*</button>
+        <button onclick="addNum(4)" class=" num">4</button>
+        <button onclick="addNum(5)" class=" num">5</button>
+        <button onclick="addNum(6)" class=" num">6</button>
+        <button onclick="addOperator('-')" class="other minus">-</button>
+        <button onclick="addNum(1)" class=" num">1</button>
+        <button onclick="addNum(2)" class=" num">2</button>
+        <button onclick="addNum(3)" class=" num">3</button>
+        <button onclick="addOperator('+')" class="other plus">+</button>
+        <button onclick="addNum(0)" class=" num">0</button>
+        <button class="other dot">.</button>
+        <button onclick="equals()" class="equal">=</button>
+        </div>
+    </div>
+</div>    
+
+<script>
+let num1 = '';
+let num2 = '';
+let operator = '';
+let wholeNum = ''
+let doingNum = true
+let numCount = 1
+let opCount = 1
+let output = ''
+
+
+const display = document.getElementById('display')
+
+function addNum(num){
+    let first = display.querySelector('.finalOutput')
+    if(display.contains(first)){
+        clears(display)
+        if(doingNum === true && num !== 0){
+        const number = document.createElement('div')
+        number.classList.add('writtenNum', 'count' + numCount)
+        wholeNum = num.toString()
+        number.textContent = wholeNum
+        display.appendChild(number)
+        doingNum = false
+        }
+        else if(doingNum === false){
+            const numBox = display.lastChild
+            numBox.textContent = wholeNum + num
+            wholeNum = wholeNum + num
+        }
+    }
+    else{
+        if(doingNum === true && num !== 0){
+        const number = document.createElement('div')
+        number.classList.add('writtenNum', 'count' + numCount)
+        wholeNum = num.toString()
+        number.textContent = wholeNum
+        display.appendChild(number)
+        doingNum = false
+    }
+    else if(doingNum === false){
+        const numBox = display.lastChild
+        numBox.textContent = wholeNum + num
+        wholeNum = wholeNum + num
+    }
+    }
+    
+}
+function addOperator(operator){
+    if(doingNum === false){
+        const context = document.createElement('p')
+    context.classList.add('context', 'context' + opCount)
+    context.setAttribute('id', 'operator' + opCount)
+    context.textContent = operator
+    display.appendChild(context)
+    doingNum = true
+    numCount++
+    opCount++
+    }
+    else{
+        alert ('noooooooo')
+    }
+}
+function clears(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    num1 = ''
+    num2 = ''
+    operator = ''
+    doingNum = true
+}
+
+function equals(){
+    let count = 1
+    let num1 = document.querySelector('.count' + count).innerHTML
+    count ++
+    let operator = document.querySelector('.context').innerHTML
+    let num2 = document.querySelector('.count' + count).innerHTML
+    console.log(num1)
+    console.log(operator)
+    console.log(num2)
+
+    
+    if(operator === '-'){
+        output = Math.floor(num1) - Math.floor(num2)
+    }
+    else if(operator === '+'){
+        output = Math.floor(num1) + Math.floor(num2)
+    }
+    else if(operator === '*'){
+        output = Math.floor(num1) * Math.floor(num2)
+    }
+    else if(operator === '/'){
+        output = Math.floor(num1) / Math.floor(num2)
+    }
+    count = 1
+    numCount = 1
+    console.log(output)
+    const finalOutput = document.createElement('div')
+    finalOutput.classList.add('finalOutput')
+    finalOutput.textContent = output
+    clears(display)
+    display.appendChild(finalOutput)
+}
+
+</script>
+</body>
+
+</html>
